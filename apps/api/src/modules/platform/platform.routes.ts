@@ -1,0 +1,16 @@
+import { Router } from 'express';
+import { requireAuth } from '../../middleware/auth';
+import * as c from './platform.controller';
+const router = Router();
+router.use(requireAuth);
+router.get('/settings', c.getSettings);
+router.put('/settings', c.updateSettings);
+router.get('/notifications', c.listNotifications);
+router.post('/notifications/:id/read', c.markNotificationRead);
+router.get('/reports', c.listReports);
+router.post('/reports', c.createReport);
+router.get('/audit-logs', c.listAuditLogs);
+router.get('/billing/status', c.billingStatus);
+router.post('/billing/checkout', c.checkout);
+export const stripeWebhook = c.stripeWebhook;
+export default router;

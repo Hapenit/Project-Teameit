@@ -1,0 +1,15 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const campaign_controller_1 = require("./campaign.controller");
+const rbac_1 = require("../../middleware/rbac");
+const router = (0, express_1.Router)();
+router.get('/', (0, rbac_1.requirePermission)('campaigns', 'read'), campaign_controller_1.getCampaigns);
+router.post('/', (0, rbac_1.requirePermission)('campaigns', 'write'), campaign_controller_1.launchCampaign);
+router.post('/estimate-audience', (0, rbac_1.requirePermission)('campaigns', 'read'), campaign_controller_1.estimateAudience);
+router.get('/:id/analytics', (0, rbac_1.requirePermission)('campaigns', 'read'), campaign_controller_1.getCampaignAnalytics);
+router.post('/:id/lifecycle', (0, rbac_1.requirePermission)('campaigns', 'write'), campaign_controller_1.campaignLifecycle);
+router.post('/webhooks/provider', campaign_controller_1.providerTrackingWebhook);
+router.post('/webhooks/sms', campaign_controller_1.handleSmsWebhook);
+router.get('/unsubscribe', campaign_controller_1.unsubscribe);
+exports.default = router;

@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const advertising_controller_1 = require("./advertising.controller");
+const rbac_1 = require("../../middleware/rbac");
+const router = (0, express_1.Router)();
+router.get('/meta-ads/metrics', (0, rbac_1.requirePermission)('analytics', 'read'), advertising_controller_1.getMetrics);
+router.get('/meta-ads/accounts', (0, rbac_1.requirePermission)('integrations', 'read'), advertising_controller_1.metaAccounts);
+router.get('/meta-ads/:accountId/insights', (0, rbac_1.requirePermission)('analytics', 'read'), advertising_controller_1.metaInsights);
+router.get('/meta-ads/:accountId/:resource', (0, rbac_1.requirePermission)('analytics', 'read'), advertising_controller_1.metaResources);
+router.post('/meta-ads/:accountId/:resource', (0, rbac_1.requirePermission)('campaigns', 'write'), advertising_controller_1.createMetaResource);
+router.post('/meta-ads/:accountId/resource/:resourceId', (0, rbac_1.requirePermission)('campaigns', 'write'), advertising_controller_1.updateMetaResource);
+exports.default = router;

@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const auth_1 = require("../../middleware/auth");
+const tenants_controller_1 = require("./tenants.controller");
+const router = (0, express_1.Router)();
+router.use(auth_1.requireAuth);
+router.post('/', tenants_controller_1.createTenant);
+router.get('/', tenants_controller_1.getTenants);
+router.post('/active', tenants_controller_1.switchActiveTenant);
+exports.default = router;

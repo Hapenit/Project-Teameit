@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const automation_controller_1 = require("./automation.controller");
+const rbac_1 = require("../../middleware/rbac");
+const router = (0, express_1.Router)();
+router.get('/workflows', (0, rbac_1.requirePermission)('automation', 'read'), automation_controller_1.getWorkflows);
+router.get('/workflows/:id', (0, rbac_1.requirePermission)('automation', 'read'), automation_controller_1.getWorkflow);
+router.post('/workflows', (0, rbac_1.requirePermission)('automation', 'write'), automation_controller_1.saveWorkflow);
+router.post('/workflows/:id/execute', (0, rbac_1.requirePermission)('automation', 'write'), automation_controller_1.executeWorkflow);
+router.post('/executions/:executionId/resume', (0, rbac_1.requirePermission)('automation', 'write'), automation_controller_1.resumeWorkflowExecution);
+router.get('/workflows/:id/executions', (0, rbac_1.requirePermission)('automation', 'read'), automation_controller_1.getWorkflowExecutions);
+exports.default = router;

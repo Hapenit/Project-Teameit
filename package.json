@@ -1,0 +1,22 @@
+{
+  "name": "teameit-workspace",
+  "version": "1.0.0",
+  "packageManager": "npm@10.9.8",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "test": "turbo run test",
+    "test:e2e": "npm run build --workspace marketing && npm run build --workspace web && node --test tests/e2e/smoke.test.mjs",
+    "lint": "turbo run lint",
+    "type-check": "turbo run type-check",
+    "validate:migrations": "node supabase/scripts/validate-migrations.mjs"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.0"
+  }
+}

@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const publishing_controller_1 = require("./publishing.controller");
+const rbac_1 = require("../../middleware/rbac");
+const router = (0, express_1.Router)();
+router.get('/capabilities', (0, rbac_1.requirePermission)('publishing', 'read'), publishing_controller_1.getCapabilities);
+router.get('/posts', (0, rbac_1.requirePermission)('publishing', 'read'), publishing_controller_1.getPosts);
+router.post('/posts', (0, rbac_1.requirePermission)('publishing', 'write'), publishing_controller_1.createPost);
+router.post('/posts/:id/publish', (0, rbac_1.requirePermission)('publishing', 'write'), publishing_controller_1.publishPost);
+exports.default = router;

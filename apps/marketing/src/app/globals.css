@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-white text-navy-900 antialiased;
+  }
+  ::selection {
+    @apply bg-indigo-100 text-navy-900;
+  }
+  :focus-visible {
+    @apply outline-none ring-2 ring-accent-indigo ring-offset-2;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+  }
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-accent-indigo to-accent-purple px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition duration-200 hover:-translate-y-0.5 hover:opacity-95 hover:shadow-md active:translate-y-0;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded-lg border border-navy-800/15 bg-white px-5 py-2.5 text-sm font-semibold text-navy-900 transition duration-200 hover:-translate-y-0.5 hover:bg-slate-50 hover:shadow-sm active:translate-y-0;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center rounded-lg px-3 py-2 text-sm font-medium text-navy-800 hover:bg-slate-100;
+  }
+  .section {
+    @apply py-16 sm:py-20;
+  }
+  .prose-legal h2 {
+    @apply mt-10 mb-3 text-xl font-semibold text-navy-900;
+  }
+  .prose-legal h3 {
+    @apply mt-6 mb-2 text-lg font-semibold text-navy-800;
+  }
+  .prose-legal p,
+  .prose-legal li {
+    @apply text-[15px] leading-7 text-slate-700;
+  }
+  .prose-legal ul {
+    @apply my-3 list-disc space-y-1 pl-5;
+  }
+  .prose-legal a {
+    @apply font-medium text-accent-indigo underline-offset-2 hover:underline;
+  }
+  .placeholder-note {
+    @apply inline-block rounded bg-amber-50 px-1.5 py-0.5 text-xs font-medium text-amber-800 ring-1 ring-amber-200;
+  }
+  .animate-fade-up {
+    animation: fade-up 700ms cubic-bezier(.22, 1, .36, 1) both;
+  }
+  .animate-fade-up-delay {
+    animation: fade-up 700ms 120ms cubic-bezier(.22, 1, .36, 1) both;
+  }
+  .surface-card {
+    @apply rounded-2xl border border-slate-200 bg-white shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-lg;
+  }
+  .section > .container-page {
+    animation: fade-up 650ms cubic-bezier(.22, 1, .36, 1) both;
+  }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

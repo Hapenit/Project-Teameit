@@ -1,0 +1,28 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const integrations_controller_1 = require("./integrations.controller");
+const rbac_1 = require("../../middleware/rbac");
+const router = (0, express_1.Router)();
+router.get('/', (0, rbac_1.requirePermission)('integrations', 'read'), integrations_controller_1.getIntegrations);
+router.get('/auth-url', (0, rbac_1.requirePermission)('integrations', 'manage'), integrations_controller_1.getAuthUrl);
+router.get('/:provider/oauth/callback', integrations_controller_1.redirectOAuthCallback);
+router.post('/callback', integrations_controller_1.handleOAuthCallback); // No RBAC middleware here as it's often a direct cross-origin redirect, though state secures it
+router.post('/email', (0, rbac_1.requirePermission)('integrations', 'manage'), integrations_controller_1.connectEmail);
+router.post('/:provider/analytics/sync', (0, rbac_1.requirePermission)('integrations', 'manage'), integrations_controller_1.syncAnalytics);
+router.get('/whatsapp/status', (0, rbac_1.requirePermission)('integrations', 'read'), integrations_controller_1.whatsappStatus);
+router.get('/whatsapp/templates', (0, rbac_1.requirePermission)('integrations', 'read'), integrations_controller_1.whatsappTemplates);
+router.get('/whatsapp/templates/:name/status', (0, rbac_1.requirePermission)('integrations', 'read'), integrations_controller_1.whatsappTemplateStatus);
+router.post('/whatsapp/templates/variables', (0, rbac_1.requirePermission)('integrations', 'read'), integrations_controller_1.whatsappTemplateVariables);
+router.post('/whatsapp/messages', (0, rbac_1.requirePermission)('integrations', 'manage'), integrations_controller_1.sendWhatsAppMessage);
+router.post('/whatsapp/templates', (0, rbac_1.requirePermission)('integrations', 'manage'), integrations_controller_1.whatsappTemplateCreate);
+router.post('/whatsapp/templates/:id', (0, rbac_1.requirePermission)('integrations', 'manage'), integrations_controller_1.whatsappTemplateUpdate);
+router.delete('/whatsapp/templates/:name', (0, rbac_1.requirePermission)('integrations', 'manage'), integrations_controller_1.whatsappTemplateDelete);
+router.get('/whatsapp/catalog/products', (0, rbac_1.requirePermission)('integrations', 'read'), integrations_controller_1.whatsappCatalog);
+router.post('/whatsapp/catalog/sync', (0, rbac_1.requirePermission)('integrations', 'manage'), integrations_controller_1.whatsappCatalogSync);
+router.post('/whatsapp/catalog/share', (0, rbac_1.requirePermission)('integrations', 'manage'), integrations_controller_1.whatsappProductShare);
+router.post('/whatsapp/catalog/products', (0, rbac_1.requirePermission)('integrations', 'manage'), integrations_controller_1.whatsappProductCreate);
+router.post('/whatsapp/catalog/products/:id', (0, rbac_1.requirePermission)('integrations', 'manage'), integrations_controller_1.whatsappProductUpdate);
+router.delete('/whatsapp/catalog/products/:id', (0, rbac_1.requirePermission)('integrations', 'manage'), integrations_controller_1.whatsappProductDelete);
+router.delete('/:provider', (0, rbac_1.requirePermission)('integrations', 'manage'), integrations_controller_1.disconnectIntegration);
+exports.default = router;

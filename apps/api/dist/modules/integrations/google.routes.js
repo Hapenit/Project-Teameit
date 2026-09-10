@@ -1,0 +1,18 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const rbac_1 = require("../../middleware/rbac");
+const google_controller_1 = require("./google.controller");
+const router = (0, express_1.Router)();
+router.get('/:provider/resources', (0, rbac_1.requirePermission)('integrations', 'read'), google_controller_1.listGoogleResources);
+router.post('/analytics/report', (0, rbac_1.requirePermission)('analytics', 'read'), google_controller_1.googleAnalyticsReport);
+router.post('/search-console/report', (0, rbac_1.requirePermission)('analytics', 'read'), google_controller_1.googleSearchReport);
+router.post('/search-console/full-report', (0, rbac_1.requirePermission)('analytics', 'read'), google_controller_1.searchConsoleFullReport);
+router.post('/ads/query', (0, rbac_1.requirePermission)('advertising', 'read'), google_controller_1.googleAdsQuery);
+router.post('/ads/mutate', (0, rbac_1.requirePermission)('advertising', 'manage'), google_controller_1.googleAdsMutate);
+router.post('/youtube/upload/init', (0, rbac_1.requirePermission)('integrations', 'manage'), google_controller_1.youtubeUploadInit);
+router.post('/youtube/analytics/report', (0, rbac_1.requirePermission)('analytics', 'read'), google_controller_1.youtubeAnalyticsReport);
+router.all('/youtube/*', (0, rbac_1.requirePermission)('integrations', 'manage'), google_controller_1.youtubeApi);
+router.all('/business/*', (0, rbac_1.requirePermission)('integrations', 'manage'), google_controller_1.businessApi);
+router.post('/adsense/report', (0, rbac_1.requirePermission)('analytics', 'read'), google_controller_1.adsenseReport);
+exports.default = router;

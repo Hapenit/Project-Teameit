@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const crm_controller_1 = require("./crm.controller");
+const rbac_1 = require("../../middleware/rbac");
+const router = (0, express_1.Router)();
+router.get('/contacts', (0, rbac_1.requirePermission)('crm', 'read'), crm_controller_1.getContacts);
+router.put('/contacts/:id', (0, rbac_1.requirePermission)('crm', 'write'), crm_controller_1.updateContact);
+router.get('/pipelines', (0, rbac_1.requirePermission)('crm', 'read'), crm_controller_1.getPipelines);
+router.post('/contacts/import', (0, rbac_1.requirePermission)('crm', 'write'), crm_controller_1.importContacts);
+router.post('/contacts/:id/notes', (0, rbac_1.requirePermission)('crm', 'write'), crm_controller_1.addNote);
+router.post('/contacts/:id/tasks', (0, rbac_1.requirePermission)('crm', 'write'), crm_controller_1.addTask);
+router.put('/contacts/tasks/:taskId/complete', (0, rbac_1.requirePermission)('crm', 'write'), crm_controller_1.completeTask);
+exports.default = router;

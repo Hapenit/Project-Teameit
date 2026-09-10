@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const webhooks_controller_1 = require("./webhooks.controller");
+const router = (0, express_1.Router)();
+router.get('/whatsapp', webhooks_controller_1.verifyWhatsAppWebhook);
+router.post('/whatsapp', webhooks_controller_1.handleWhatsAppWebhook);
+router.get('/instagram', webhooks_controller_1.verifyInstagramWebhook);
+router.post('/instagram', webhooks_controller_1.handleInstagramWebhook);
+router.get('/facebook', webhooks_controller_1.verifyFacebookWebhook);
+router.post('/facebook', webhooks_controller_1.handleFacebookWebhook);
+exports.default = router;

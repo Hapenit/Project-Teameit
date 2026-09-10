@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const inbox_controller_1 = require("./inbox.controller");
+const rbac_1 = require("../../middleware/rbac");
+const router = (0, express_1.Router)();
+router.get('/conversations', (0, rbac_1.requirePermission)('inbox', 'read'), inbox_controller_1.getConversations);
+router.get('/conversations/:conversationId/messages', (0, rbac_1.requirePermission)('inbox', 'read'), inbox_controller_1.getMessages);
+router.put('/conversations/:conversationId/assign', (0, rbac_1.requirePermission)('inbox', 'write'), inbox_controller_1.assignAgent);
+router.get('/team', (0, rbac_1.requirePermission)('inbox', 'read'), inbox_controller_1.getTenantMembers);
+router.post('/conversations/:conversationId/messages', (0, rbac_1.requirePermission)('inbox', 'write'), inbox_controller_1.sendMessage);
+exports.default = router;
