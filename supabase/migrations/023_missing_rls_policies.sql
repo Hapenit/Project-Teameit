@@ -125,6 +125,7 @@ alter table public.pipelines enable row level security;
 alter table public.pipeline_stages enable row level security;
 
 drop policy if exists "Users can view pipelines in their tenants" on public.pipelines;
+drop policy if exists "Users can view pipelines in their tenants" on public.pipelines;
 create policy "Users can view pipelines in their tenants"
   on public.pipelines for select
   using (
@@ -135,6 +136,7 @@ create policy "Users can view pipelines in their tenants"
     )
   );
 
+drop policy if exists "Users can view pipeline stages in their tenants" on public.pipeline_stages;
 create policy "Users can view pipeline stages in their tenants"
   on public.pipeline_stages for select
   using (
